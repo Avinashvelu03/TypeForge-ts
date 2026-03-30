@@ -70,10 +70,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Avinashvelu03/typeforge.git"
+    "url": "https://github.com/Avinashvelu03/TypeForge-ts.git"
   },
-  "bugs": { "url": "https://github.com/Avinashvelu03/typeforge/issues" },
-  "homepage": "https://github.com/Avinashvelu03/typeforge#readme",
+  "bugs": { "url": "https://github.com/Avinashvelu03/TypeForge-ts/issues" },
+  "homepage": "https://github.com/Avinashvelu03/TypeForge-ts#readme",
   "devDependencies": {
     "@vitest/coverage-v8": "^3.1.1",
     "eslint": "^8.57.0",

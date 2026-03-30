@@ -2,11 +2,11 @@
 
 > **Blazing-fast, zero-dependency TypeScript utility toolkit. The modern lodash replacement.**
 
-[![npm version](https://img.shields.io/npm/v/typeforge.svg)](https://www.npmjs.com/package/typeforge)
-[![npm downloads](https://img.shields.io/npm/dm/typeforge.svg)](https://www.npmjs.com/package/typeforge)
-[![license](https://img.shields.io/npm/l/typeforge.svg)](https://github.com/Avinashvelu03/typeforge/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/typeforge-ts.svg)](https://www.npmjs.com/package/typeforge-ts)
+[![npm downloads](https://img.shields.io/npm/dm/typeforge-ts.svg)](https://www.npmjs.com/package/typeforge-ts)
+[![license](https://img.shields.io/npm/l/typeforge-ts.svg)](https://github.com/Avinashvelu03/TypeForge-ts/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
-[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/Avinashvelu03/typeforge)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/Avinashvelu03/TypeForge-ts)
 
 **50+ utility functions** across 6 modules — with perfect TypeScript inference, tree-shaking, and edge compatibility. No dependencies. No bloat.
 
