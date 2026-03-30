@@ -1,4 +1,4 @@
-# TypeForge ⚒️
+# TypeForge-ts ⚒️
 
 > **Blazing-fast, zero-dependency TypeScript utility toolkit. The modern lodash replacement.**
 
@@ -7,14 +7,17 @@
 [![license](https://img.shields.io/npm/l/typeforge-ts.svg)](https://github.com/Avinashvelu03/TypeForge-ts/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
 [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/Avinashvelu03/TypeForge-ts)
+[![CI](https://github.com/Avinashvelu03/TypeForge-ts/actions/workflows/ci.yml/badge.svg)](https://github.com/Avinashvelu03/TypeForge-ts/actions/workflows/ci.yml)
+[![Bundle Size](https://img.shields.io/badge/bundle-22.7kB-green.svg)](https://www.npmjs.com/package/typeforge-ts)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org/)
 
-**50+ utility functions** across 6 modules — with perfect TypeScript inference, tree-shaking, and edge compatibility. No dependencies. No bloat.
+**53 utility functions** across 6 modules — with perfect TypeScript inference, tree-shaking, and edge compatibility. No dependencies. No bloat.
 
 ---
 
-## ✨ Why TypeForge?
+## ✨ Why TypeForge-ts?
 
-| | **lodash** | **es-toolkit** | **TypeForge** |
+| | **lodash** | **es-toolkit** | **TypeForge-ts** |
 |---|:-:|:-:|:-:|
 | TypeScript-first | ❌ | ✅ | ✅ |
 | Zero dependencies | ❌ | ✅ | ✅ |
@@ -22,42 +25,44 @@
 | Sub-path exports | ❌ | ✅ | ✅ |
 | Type guards | ❌ | ❌ | ✅ |
 | Promise utilities | ❌ | ❌ | ✅ |
-| Edge-runtime | ⚠️ | ✅ | ✅ |
-| 100% coverage | ❌ | ⚠️ | ✅ |
+| Edge-runtime ready | ⚠️ | ✅ | ✅ |
+| 100% test coverage | ❌ | ⚠️ | ✅ |
+
+---
 
 ## 📦 Installation
 
 ```bash
-npm install typeforge
+npm install typeforge-ts
 ```
 
 ```bash
-pnpm add typeforge
+pnpm add typeforge-ts
 ```
 
 ```bash
-yarn add typeforge
+yarn add typeforge-ts
 ```
 
 ## 🚀 Quick Start
 
 ```typescript
-import { chunk, groupBy, camelCase, debounce, pLimit, isString } from 'typeforge';
+import { chunk, groupBy, camelCase, debounce, pLimit, isString } from 'typeforge-ts';
 
 // Or import specific modules for maximum tree-shaking:
-import { chunk, groupBy } from 'typeforge/array';
-import { pick, merge } from 'typeforge/object';
-import { camelCase, slugify } from 'typeforge/string';
-import { debounce, memoize } from 'typeforge/function';
-import { pLimit, pRetry } from 'typeforge/promise';
-import { isString, isNil } from 'typeforge/guard';
+import { chunk, groupBy } from 'typeforge-ts/array';
+import { pick, merge } from 'typeforge-ts/object';
+import { camelCase, slugify } from 'typeforge-ts/string';
+import { debounce, memoize } from 'typeforge-ts/function';
+import { pLimit, pRetry } from 'typeforge-ts/promise';
+import { isString, isNil } from 'typeforge-ts/guard';
 ```
 
 ---
 
 ## 📖 API Reference
 
-### 🔢 Array (`typeforge/array`)
+### 🔢 Array — `typeforge-ts/array` (16 functions)
 
 ```typescript
 chunk([1, 2, 3, 4, 5], 2)       // [[1, 2], [3, 4], [5]]
@@ -86,7 +91,9 @@ take([1, 2, 3, 4], 2)               // [1, 2]
 drop([1, 2, 3, 4], 2)               // [3, 4]
 ```
 
-### 📦 Object (`typeforge/object`)
+---
+
+### 📦 Object — `typeforge-ts/object` (10 functions)
 
 ```typescript
 pick({ a: 1, b: 2, c: 3 }, ['a', 'c'])  // { a: 1, c: 3 }
@@ -112,7 +119,9 @@ clone({ a: { b: 1 } })          // Shallow clone
 clone({ a: { b: 1 } }, true)    // Deep clone
 ```
 
-### 🔤 String (`typeforge/string`)
+---
+
+### 🔤 String — `typeforge-ts/string` (8 functions)
 
 ```typescript
 camelCase('hello_world')     // 'helloWorld'
@@ -125,7 +134,9 @@ slugify('Hello World!')      // 'hello-world'
 escapeHtml('<script>')       // '&lt;script&gt;'
 ```
 
-### ⚡ Function (`typeforge/function`)
+---
+
+### ⚡ Function — `typeforge-ts/function` (6 functions)
 
 ```typescript
 // Debounce with cancel and flush
@@ -163,7 +174,9 @@ transform(5); // '12'
 noop(); // does nothing
 ```
 
-### 🔄 Promise (`typeforge/promise`)
+---
+
+### 🔄 Promise — `typeforge-ts/promise` (5 functions)
 
 ```typescript
 await sleep(1000); // Wait 1 second
@@ -184,10 +197,12 @@ const data = await pRetry(() => fetchData(), {
 const result = await pTimeout(fetch('/api'), 5000);
 
 // Parallel execution with concurrency
-const results = await pAll(tasks, 3);
+const allResults = await pAll(tasks, 3);
 ```
 
-### 🛡️ Guard (`typeforge/guard`)
+---
+
+### 🛡️ Guard — `typeforge-ts/guard` (8 type guards)
 
 ```typescript
 isString('hello')       // true — narrows to string
@@ -208,17 +223,46 @@ Import from sub-paths for minimal bundle size:
 
 ```typescript
 // ✅ Only bundles chunk and groupBy (~200 bytes)
-import { chunk, groupBy } from 'typeforge/array';
+import { chunk, groupBy } from 'typeforge-ts/array';
 
 // ⚠️ Bundles everything (~5 KB)
-import { chunk, groupBy } from 'typeforge';
+import { chunk, groupBy } from 'typeforge-ts';
 ```
+
+---
+
+## 📊 Complete Function List
+
+| Module | Count | Functions |
+|--------|:-----:|-----------|
+| **Array** | 16 | `chunk` `compact` `flatten` `unique` `groupBy` `sortBy` `intersection` `difference` `zip` `unzip` `range` `shuffle` `sample` `partition` `take` `drop` |
+| **Object** | 10 | `pick` `omit` `merge` `get` `set` `mapKeys` `mapValues` `invert` `isEmpty` `clone` |
+| **String** | 8 | `camelCase` `snakeCase` `kebabCase` `pascalCase` `capitalize` `truncate` `slugify` `escapeHtml` |
+| **Function** | 6 | `debounce` `throttle` `once` `memoize` `pipe` `noop` |
+| **Promise** | 5 | `sleep` `pLimit` `pRetry` `pTimeout` `pAll` |
+| **Guard** | 8 | `isString` `isNumber` `isNil` `isPlainObject` `isPromise` `isDefined` `isBoolean` `isFunction` |
+| **Total** | **53** | |
+
+---
 
 ## 🔧 Requirements
 
 - **Node.js** ≥ 18.0.0
 - **TypeScript** ≥ 5.0
-- Works with Bun, Deno, Cloudflare Workers
+- Works with **Bun**, **Deno**, **Cloudflare Workers**, **Vercel Edge**
+
+## 🤝 Contributing
+
+Contributions are welcome! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
+
+```bash
+git clone https://github.com/Avinashvelu03/TypeForge-ts.git
+cd TypeForge-ts
+npm install
+npm test              # Run tests
+npm run test:coverage # 100% coverage
+npm run build         # Build ESM + CJS + types
+```
 
 ## 📄 License
 
