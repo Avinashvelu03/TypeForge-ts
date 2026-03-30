@@ -1,5 +1,5 @@
 {
-  "name": "typeforge",
+  "name": "typeforge-ts",
   "version": "1.0.0",
   "type": "module",
   "description": "Blazing-fast, zero-dependency TypeScript utility toolkit. Modern lodash replacement with perfect type inference, tree-shaking, and edge compatibility.",
