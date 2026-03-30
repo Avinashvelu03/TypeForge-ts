@@ -1,0 +1,225 @@
+# TypeForge ⚒️
+
+> **Blazing-fast, zero-dependency TypeScript utility toolkit. The modern lodash replacement.**
+
+[![npm version](https://img.shields.io/npm/v/typeforge.svg)](https://www.npmjs.com/package/typeforge)
+[![npm downloads](https://img.shields.io/npm/dm/typeforge.svg)](https://www.npmjs.com/package/typeforge)
+[![license](https://img.shields.io/npm/l/typeforge.svg)](https://github.com/Avinashvelu03/typeforge/blob/main/LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/Avinashvelu03/typeforge)
+
+**50+ utility functions** across 6 modules — with perfect TypeScript inference, tree-shaking, and edge compatibility. No dependencies. No bloat.
+
+---
+
+## ✨ Why TypeForge?
+
+| | **lodash** | **es-toolkit** | **TypeForge** |
+|---|:-:|:-:|:-:|
+| TypeScript-first | ❌ | ✅ | ✅ |
+| Zero dependencies | ❌ | ✅ | ✅ |
+| Tree-shakable | ⚠️ partial | ✅ | ✅ |
+| Sub-path exports | ❌ | ✅ | ✅ |
+| Type guards | ❌ | ❌ | ✅ |
+| Promise utilities | ❌ | ❌ | ✅ |
+| Edge-runtime | ⚠️ | ✅ | ✅ |
+| 100% coverage | ❌ | ⚠️ | ✅ |
+
+## 📦 Installation
+
+```bash
+npm install typeforge
+```
+
+```bash
+pnpm add typeforge
+```
+
+```bash
+yarn add typeforge
+```
+
+## 🚀 Quick Start
+
+```typescript
+import { chunk, groupBy, camelCase, debounce, pLimit, isString } from 'typeforge';
+
+// Or import specific modules for maximum tree-shaking:
+import { chunk, groupBy } from 'typeforge/array';
+import { pick, merge } from 'typeforge/object';
+import { camelCase, slugify } from 'typeforge/string';
+import { debounce, memoize } from 'typeforge/function';
+import { pLimit, pRetry } from 'typeforge/promise';
+import { isString, isNil } from 'typeforge/guard';
+```
+
+---
+
+## 📖 API Reference
+
+### 🔢 Array (`typeforge/array`)
+
+```typescript
+chunk([1, 2, 3, 4, 5], 2)       // [[1, 2], [3, 4], [5]]
+compact([0, 1, false, 2, ''])    // [1, 2]
+flatten([1, [2, [3]]], 2)        // [1, 2, 3]
+unique([1, 2, 2, 3])             // [1, 2, 3]
+unique(users, u => u.id)         // Dedupe by key
+
+groupBy([1, 2, 3, 4], n => n % 2 ? 'odd' : 'even')
+// { odd: [1, 3], even: [2, 4] }
+
+sortBy(users, u => u.name)       // Stable sort, ascending
+sortBy(users, u => u.age, 'desc') // Descending
+
+intersection([1, 2, 3], [2, 3, 4])  // [2, 3]
+difference([1, 2, 3], [2, 3, 4])    // [1]
+zip([1, 2], ['a', 'b'])             // [[1, 'a'], [2, 'b']]
+unzip([[1, 'a'], [2, 'b']])         // [[1, 2], ['a', 'b']]
+range(0, 5)                          // [0, 1, 2, 3, 4]
+range(0, 10, 3)                      // [0, 3, 6, 9]
+shuffle([1, 2, 3, 4, 5])            // Random order
+sample([1, 2, 3])                    // Random element
+sample([1, 2, 3], 2)                 // 2 random elements
+partition([1, 2, 3, 4], n => n > 2)  // [[3, 4], [1, 2]]
+take([1, 2, 3, 4], 2)               // [1, 2]
+drop([1, 2, 3, 4], 2)               // [3, 4]
+```
+
+### 📦 Object (`typeforge/object`)
+
+```typescript
+pick({ a: 1, b: 2, c: 3 }, ['a', 'c'])  // { a: 1, c: 3 }
+omit({ a: 1, b: 2, c: 3 }, ['b'])       // { a: 1, c: 3 }
+
+merge({ a: { x: 1 } }, { a: { y: 2 } })
+// { a: { x: 1, y: 2 } }  — deep merge!
+
+get({ a: { b: { c: 42 } } }, 'a.b.c')           // 42
+get({ a: 1 }, 'b.c', 'default')                  // 'default'
+set({ a: { b: 1 } }, 'a.b', 2)                   // { a: { b: 2 } } — immutable
+
+mapKeys({ a: 1, b: 2 }, k => k.toUpperCase())    // { A: 1, B: 2 }
+mapValues({ a: 1, b: 2 }, v => v * 2)             // { a: 2, b: 4 }
+invert({ a: '1', b: '2' })                        // { '1': 'a', '2': 'b' }
+
+isEmpty(null)   // true
+isEmpty('')     // true
+isEmpty([])     // true
+isEmpty({})     // true
+
+clone({ a: { b: 1 } })          // Shallow clone
+clone({ a: { b: 1 } }, true)    // Deep clone
+```
+
+### 🔤 String (`typeforge/string`)
+
+```typescript
+camelCase('hello_world')     // 'helloWorld'
+snakeCase('helloWorld')      // 'hello_world'
+kebabCase('helloWorld')      // 'hello-world'
+pascalCase('hello_world')    // 'HelloWorld'
+capitalize('hello')          // 'Hello'
+truncate('Hello World!', 8)  // 'Hello...'
+slugify('Hello World!')      // 'hello-world'
+escapeHtml('<script>')       // '&lt;script&gt;'
+```
+
+### ⚡ Function (`typeforge/function`)
+
+```typescript
+// Debounce with cancel and flush
+const search = debounce(fetchResults, 300);
+search('query');
+search.cancel();
+search.flush();
+
+// Debounce with leading execution
+const save = debounce(persist, 1000, { leading: true });
+
+// Throttle (max once per interval)
+const scroll = throttle(handleScroll, 100);
+scroll.cancel();
+
+// Execute once
+const init = once(expensiveSetup);
+init(); // runs
+init(); // returns cached result
+
+// Memoize with cache control
+const compute = memoize(heavyCalc);
+compute(42);     // computes
+compute(42);     // cached!
+compute.clear(); // clear cache
+
+// Pipe functions left-to-right
+const transform = pipe(
+  (x: number) => x + 1,
+  (x: number) => x * 2,
+  (x: number) => x.toString(),
+);
+transform(5); // '12'
+
+noop(); // does nothing
+```
+
+### 🔄 Promise (`typeforge/promise`)
+
+```typescript
+await sleep(1000); // Wait 1 second
+
+// Concurrency limiter
+const limit = pLimit(5);
+const results = await Promise.all(
+  urls.map(url => limit(() => fetch(url))),
+);
+
+// Retry with delay
+const data = await pRetry(() => fetchData(), {
+  retries: 3,
+  delay: 1000,
+});
+
+// Timeout wrapper
+const result = await pTimeout(fetch('/api'), 5000);
+
+// Parallel execution with concurrency
+const results = await pAll(tasks, 3);
+```
+
+### 🛡️ Guard (`typeforge/guard`)
+
+```typescript
+isString('hello')       // true — narrows to string
+isNumber(42)            // true — excludes NaN!
+isNil(null)             // true — null | undefined
+isPlainObject({})       // true — excludes Date, Array, etc.
+isPromise(p)            // true — checks for .then()
+isDefined(value)        // true — excludes null & undefined
+isBoolean(true)         // true
+isFunction(() => {})    // true
+```
+
+---
+
+## 🌳 Tree-Shaking
+
+Import from sub-paths for minimal bundle size:
+
+```typescript
+// ✅ Only bundles chunk and groupBy (~200 bytes)
+import { chunk, groupBy } from 'typeforge/array';
+
+// ⚠️ Bundles everything (~5 KB)
+import { chunk, groupBy } from 'typeforge';
+```
+
+## 🔧 Requirements
+
+- **Node.js** ≥ 18.0.0
+- **TypeScript** ≥ 5.0
+- Works with Bun, Deno, Cloudflare Workers
+
+## 📄 License
+
+[MIT](./LICENSE) © [Avinash Velu](https://github.com/Avinashvelu03)
