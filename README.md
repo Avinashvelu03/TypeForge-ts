@@ -267,3 +267,23 @@ npm run build         # Build ESM + CJS + types
 ## 📄 License
 
 [MIT](./LICENSE) © [Avinash Velu](https://github.com/Avinashvelu03)
+
+---
+
+## ⚒️ Support TypeForge
+
+TypeForge is independently built and completely free. If it's replaced lodash in your codebase or made your TypeScript cleaner, it would mean the world to get your support:
+
+<div align="center">
+
+> *"The best tools are the ones that just work — and don't cost you anything."*
+
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Buy%20a%20coffee-FF5E5B?style=flat-square&logo=ko-fi&logoColor=white)](https://ko-fi.com/avinashvelu)
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub-Sponsor%20%E2%9D%A4-EA4AAA?style=flat-square&logo=github-sponsors&logoColor=white)](https://github.com/sponsors/Avinashvelu03)
+
+</div>
+
+**Other ways to help:**
+- ⭐ **Star the repo** at [github.com/Avinashvelu03/TypeForge-ts](https://github.com/Avinashvelu03/TypeForge-ts)
+- 🧑‍💻 Share with your TypeScript community — dev.to, Reddit, Discord
+- 📋 Suggest utilities — what does lodash have that TypeForge should replace next?
