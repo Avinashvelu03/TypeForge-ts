@@ -93,16 +93,23 @@ describe('promise', () => {
       expect(await p).toBe('ok');
     });
     it('should reject on timeout', async () => {
-      const inner = new Promise(() => {});
-      // suppress unhandled rejection from dangling inner promise
-      (inner as Promise<unknown>).catch(() => {});
+      // Use a never-resolving promise; suppress its internal rejection after timeout
+      let rejectInner!: (err: unknown) => void;
+      const inner = new Promise<never>((_, rej) => { rejectInner = rej; });
       const p = pTimeout(inner, 100);
+      p.catch(() => {}); // suppress outer timeout rejection for this test
       await vi.advanceTimersByTimeAsync(101);
       await expect(p).rejects.toThrow('timed out');
+      // cleanup: reject inner to settle it cleanly
+      rejectInner(new Error('cleanup'));
     });
     it('should propagate errors', async () => {
-      const p = pTimeout(Promise.reject(new Error('inner')), 1000);
-      // advance timers to clear any pending timeout set by pTimeout
+      // Create rejected promise and immediately pass to pTimeout so it is consumed
+      const p = pTimeout(
+        new Promise<never>((_, rej) => { rej(new Error('inner')); }),
+        1000,
+      );
+      // advance to clear the timeout timer
       await vi.advanceTimersByTimeAsync(1001);
       await expect(p).rejects.toThrow('inner');
     });
