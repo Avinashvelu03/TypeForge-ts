@@ -49,14 +49,22 @@ export function truncate(str: string, maxLen: number, suffix: string = '...'): s
 
 /** Convert a string to a URL-safe slug. */
 export function slugify(str: string): string {
-  return str
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s/g, '-')
-    .replace(/_/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-+|-+$/g, '');
+  // Step 1: lowercase and trim
+  let slug = str.toLowerCase().trim();
+
+  // Step 2: remove characters that are not word chars, spaces, or hyphens
+  // Uses a simple character class with no nested quantifiers — O(n) safe
+  slug = slug.replace(/[^\w\s-]/g, '');
+
+  // Step 3: replace whitespace and underscores with a single hyphen each
+  // Deliberately avoid /\s+/ or /-+/ quantifier chains that cause ReDoS
+  slug = slug.replace(/\s/g, '-').replace(/_/g, '-');
+
+  // Step 4: collapse consecutive hyphens using a possessive-style linear scan
+  // Split on hyphens and rejoin — avoids /-+/g backtracking on long dash runs
+  slug = slug.split('-').filter((part) => part.length > 0).join('-');
+
+  return slug;
 }
 
 /** Escape HTML special characters to prevent XSS. */
