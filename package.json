@@ -1,6 +1,6 @@
 {
   "name": "typeforge-ts",
-          "version": "1.0.7",
+          "version": "1.0.8",
   "type": "module",
   "description": "Blazing-fast, zero-dependency TypeScript utility toolkit. Modern lodash replacement with perfect type inference, tree-shaking, and edge compatibility.",
   "main": "./dist/cjs/index.js",
