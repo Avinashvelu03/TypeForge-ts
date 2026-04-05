@@ -104,13 +104,14 @@ describe('promise', () => {
       rejectInner(new Error('cleanup'));
     });
     it('should propagate errors', async () => {
-      // Create rejected promise and immediately pass to pTimeout so it is consumed
+      // inner rejects immediately; pTimeout must propagate the error.
+      // pTimeout calls promise.catch(() => {}) eagerly so Node does not emit
+      // PromiseRejectionHandledWarning when the rejection fires before the
+      // outer .then handler is attached.
       const p = pTimeout(
         new Promise<never>((_, rej) => { rej(new Error('inner')); }),
         1000,
       );
-      // advance to clear the timeout timer
-      await vi.advanceTimersByTimeAsync(1001);
       await expect(p).rejects.toThrow('inner');
     });
   });

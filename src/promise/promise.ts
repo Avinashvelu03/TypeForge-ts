@@ -78,6 +78,11 @@ export function pRetry<T>(
  * Wrap a promise with a timeout. Rejects with an Error if not resolved within `ms`.
  */
 export function pTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  // Attach a no-op catch immediately so Node's unhandled-rejection tracker
+  // always sees a synchronous handler, regardless of when the outer wrapper
+  // attaches its own .then/.catch via the returned promise.
+  promise.catch(() => {});
+
   return new Promise<T>((resolve, reject) => {
     let settled = false;
 
